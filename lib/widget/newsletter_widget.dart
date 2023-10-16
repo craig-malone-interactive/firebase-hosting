@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-final double outerSpace = 40;
+const double outerSpace = 40;
 final borderRadiusOuter = BorderRadius.circular(12);
 final borderRadiusInner = BorderRadius.circular(10);
 
@@ -15,23 +16,24 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double sizeAvatar = 50;
-    final double yAvatar = 10;
-    final double topSpace = sizeAvatar - yAvatar;
-    final top = -sizeAvatar - yAvatar;
+    const double sizeAvatar = 50;
+    const double yAvatar = 10;
+    const double topSpace = sizeAvatar - yAvatar;
+    const top = -sizeAvatar - yAvatar;
 
     return Container(
-      margin: EdgeInsets.only(top: 10 + sizeAvatar),
-      constraints: BoxConstraints(maxWidth: 580),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 10 + sizeAvatar),
+      constraints: const BoxConstraints(maxWidth: 580),
+      padding: const EdgeInsets.all(10),
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
+//        overflow: Overflow.visible,
         children: [
           ClipRRect(
             borderRadius: borderRadiusOuter,
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(31, 40, 51, 1).withOpacity(0.5),
+                color: const Color.fromRGBO(31, 40, 51, 1).withOpacity(0.5),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -62,16 +64,16 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
   }
 
   Widget buildTop({
-    @required double topSpace,
+    required double topSpace,
   }) =>
       Container(
         width: double.infinity,
         color: Theme.of(context).primaryColor.withOpacity(0.7),
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
         child: Column(
           children: [
             SizedBox(height: topSpace),
-            Text(
+            const Text(
               'Sign Up for Flutter Newsletter',
               style: TextStyle(
                 color: Colors.white,
@@ -92,7 +94,7 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
             const SizedBox(height: 16),
             RichText(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -127,22 +129,22 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
       );
 
   Widget buildCompleted() {
-    final textColor = Color(0xFF0da865);
-    final backgroundColor = Color(0xFF9fefcf);
+    const textColor = Color(0xFF0da865);
+    const backgroundColor = Color(0xFF9fefcf);
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(bottom: 40),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 40),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: borderRadiusInner,
         border: Border.all(color: textColor, width: 3),
       ),
-      child: Row(
+      child: const Row(
         children: [
           Icon(Icons.done, color: textColor, size: 32),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Text(
               'Success! Now check your email to confirm your subscription.',
@@ -162,20 +164,33 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
         key: form,
         child: Column(
           children: [
-            TextFieldWidget(title: 'Your First Name'),
+            const TextFieldWidget(title: 'Your First Name'),
             const SizedBox(height: 20),
-            TextFieldWidget(title: 'Your Email Address'),
+            const TextFieldWidget(title: 'Your Email Address'),
             const SizedBox(height: 20),
-            Container(
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(minimumSize: const Size(200, 80)),
+                onPressed: () => Fluttertoast.showToast(
+                  msg: 'Pressed Elevated Button',
+                  fontSize: 18,
+                ),
+                child: const Text('Subscribe toast'),
+              ),
+            ),
+
+            /*          SizedBox(
               width: double.infinity,
               child: RaisedButton.icon(
                 color: Theme.of(context).primaryColor.withOpacity(0.8),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                icon: Icon(Icons.mail_outline, color: Colors.white),
-                label: Text(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                icon: const Icon(Icons.mail_outline, color: Colors.white),
+                label: const Text(
                   'SUBSCRIBE',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
@@ -185,7 +200,8 @@ class _NewsletterSignupWidgetState extends State<NewsletterSignupWidget> {
                 },
               ),
             ),
-            Container(
+            */
+            const SizedBox(
               height: outerSpace,
               child: Center(
                 child: Text(
@@ -204,26 +220,26 @@ class TextFieldWidget extends StatelessWidget {
   final String title;
 
   const TextFieldWidget({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = Colors.white;
+    const color = Colors.white;
 
     return TextFormField(
-      style: TextStyle(color: color),
+      style: const TextStyle(color: color),
       cursorColor: Theme.of(context).primaryColor,
       decoration: InputDecoration(
         hintText: title,
-        hintStyle: TextStyle(color: color),
+        hintStyle: const TextStyle(color: color),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: color, width: 2),
+          borderSide: const BorderSide(color: color, width: 2),
           borderRadius: borderRadiusInner,
         ),
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 2),
+          borderSide: const BorderSide(width: 2),
           borderRadius: borderRadiusInner,
         ),
       ),
